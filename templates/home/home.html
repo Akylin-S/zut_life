@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>中原工-校园生活</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
+  <script src="../../static/jquery/jquery-3.6.0.min.js"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+  }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">中原工-校园生活</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+    <li class="nav-item">
+      <a class="nav-link" href="#">中工3D全景</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">校园美景</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        校园景色
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="http://www.expoon.com/27712/">校园3D全景</a>
+        <a class="dropdown-item" href="#">校园美景</a>
+      </div>
+    </li>
+
+
+  </ul>
+  <ul class="navbar-nav ml-auto">
+
+    {% if login %}
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        Dropdown link
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Link 1</a>
+        <a class="dropdown-item" href="#">Link 2</a>
+        <a class="dropdown-item" href="#">Link 3</a>
+      </div>
+    </li>
+    {% else %}
+
+    <li class="nav-item">
+      <a class="nav-link" href="account/login">登录</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">注册</a>
+    </li>
+      {% endif %}
+  </ul>
+</nav>
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- 指示符 -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- 轮播图片 -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="../../static/home/slideshow-0.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="../../static/home/slideshow1.jpg">
+    </div>
+    <div class="carousel-item">
+      <img src="../../static/home/slideshow2.jpg">
+    </div>
+  </div>
+
+  <!-- 左右切换按钮 -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+<div class="copyright">
+    @学习项目: <a href="https://jq.qq.com/?_wv=1027&k=IBGaNg6u">点击学习交流</a>
+</div>
+
+</body>
+</html>

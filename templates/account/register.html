@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-{% load static %}
 <html lang="en">
+{% load static %}
 <head>
-  <title>中原工-校园生活</title>
+ <title>中原工-校园生活</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
@@ -29,7 +29,7 @@
         padding-right: 25px;
         padding-top: 15px;
         width: 390px;
-        height: 350px;
+        height: 400px;
         background: #FFFFFF;
         /*以下css用于让登录表单垂直居中在界面,可删除*/
         position: absolute;
@@ -125,6 +125,7 @@
     .copyright{
 
     }
+
   </style>
 </head>
 <body>
@@ -168,50 +169,65 @@
     </li>
     {% else %}
 
-
     <li class="nav-item">
-      <a class="nav-link" href="../../account/register">注册</a>
+      <a class="nav-link" href="../../account/login">登录</a>
     </li>
       {% endif %}
   </ul>
 </nav>
 <div class="main">
     <div class="title">
-        <span>账号登录</span>
+        <span>账号注册</span>
     </div>
 
     <div class="title-msg">
-        <span>请输入登录账户和密码</span>
+        <span>请输入注册的账户和密码</span>
     </div>
 
-    <form class="login-form" method="post"  action="/account/sure1/" >
+    <form class="login-form" method="post"  action="../../account/make_sure/" >
         {% csrf_token %}
         <!--输入框-->
         <div class="input-content">
             <!--autoFocus-->
             <div>
-                <input class= 'user' type="text" autocomplete="off"
+                <input class= 'user' type="text" autocomplete="off" onchange="username_change()"
                        placeholder="用户名" name="username" />
             </div>
 
             <div style="margin-top: 16px">
                 <input type="password" class="password"
-                       autocomplete="off" placeholder="登录密码" name="password"  maxlength="32"/>
+                       autocomplete="off" placeholder="密码" name="password"  maxlength="32"/>
             </div>
+
+              <div style="margin-top: 16px">
+                <input type="password" class=" confirmpassword"
+                       autocomplete="off" placeholder="确认密码" name="confirmpassword"  maxlength="32"/>
+            </div>
+
+              <div style="margin-top: 16px">
+                <input style="width: 170px;" type="text" class=" verfication"  placeholder="请输入验证码" name="verift" onchange="verify_input_change()"/>
+                <img src="{% static '/account/img/yzm.png' %}" id = 'verify_img' alt="验证码" class="pic_code">
+                <input type="hidden" name="img_code" id="img_code" value=""/>
+							<span class="tishi it"></span>
+              </div>
         </div>
-        {% if  message %}
-        <div id = 'message'>
-            <p style="color: red">{{ message }}</p>
+        {% if message %}
+        <div style="margin-top: 30px"  >
+            <p id = "message" style="color: red">{{ message }}</p>
+        </div>
+
+        <div  id = 'zhuce' style="text-align: center; margin-top: 50px">
+            <button type="submit" class="enter-btn" >注册</button>
+        </div>
+        {% else %}
+        <!--登入按钮-->
+        <div style="text-align: center; margin-top: 106px">
+            <button type="submit" class="enter-btn" >注册</button>
         </div>
         {% endif %}
-        <!--登入按钮-->
-        <div style="text-align: center">
-            <button type="submit" class="enter-btn" >登录</button>
-        </div>
     </form>
 
 </div>
-
 <footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
       <div class="container">
     <hr style="border: 1px  solid #000000;">
@@ -238,9 +254,44 @@
     </footer>
 </body>
 <script>
+	const host = "http://127.0.0.1:8000/"
+
 	$(document).ready(function() {
+        uuid_img();
         $('#message').delay(6000).hide(0);
         setTimeout(function (){$('#zhuce').css({'margin-top': '100px'})}, 6000)
     });
+	function uuid_img(){
+		let uuid = generate_uuid();
+		generate_image_code(uuid);
+	}
+
+	$('#verify_img').click(function () {
+		uuid_img();
+		return false;
+	})
+
+	function generate_uuid() {
+		var d = new Date().getTime();
+		if(window.performance && typeof window.performance.now === "function"){
+			d += performance.now(); //use high-precision timer if available
+		}
+		var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+			var r = (d + Math.random()*16)%16 | 0;
+			d = Math.floor(d/16);
+			return (c =='x' ? r : (r&0x3|0x8)).toString(16);
+		});
+		return uuid;
+	}
+
+	function generate_image_code(uuid) {
+		$('#verify_img').attr("src",host+'account/image_codes/'+uuid+'/')
+        $('#img_code').attr('value',uuid);
+
+	}
+
+
+
+
 </script>
 </html>

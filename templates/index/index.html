@@ -41,27 +41,17 @@
   </ul>
   <ul class="navbar-nav ml-auto">
 
-    {% if login %}
     <!-- Dropdown -->
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
-        Dropdown link
+      <img class="rounded-circle" style="width:50px; height:50px " src="/{{ user.user_img }}"> {{ user.user }}
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Link 1</a>
-        <a class="dropdown-item" href="#">Link 2</a>
-        <a class="dropdown-item" href="#">Link 3</a>
+        <a class="dropdown-item" href="#">个人中心</a>
+        <a class="dropdown-item" href="#">修改密码</a>
+        <a class="dropdown-item" href="#">退出</a>
       </div>
     </li>
-    {% else %}
-
-    <li class="nav-item">
-      <a class="nav-link" href="account/login">登录</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="account/register">注册</a>
-    </li>
-      {% endif %}
   </ul>
 </nav>
 

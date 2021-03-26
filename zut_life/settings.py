@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home',
-    'account'
+    'account',
+    'index',
+    'function'
 ]
 
 MIDDLEWARE = [
@@ -56,8 +58,7 @@ ROOT_URLCONF = 'zut_life.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [BASE_DIR / 'templates']
-        ,
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -83,7 +84,7 @@ DATABASES = {
         'PORT': 3306,  # 数据库端口
         'USER': 'kylin',  # 数据库用户名
         'PASSWORD': '123456',  # 数据库用户密码
-        'NAME': 'zut_life'  # 数据库名字
+        'NAME': 'zut'  # 数据库名字
     }
 }
 
@@ -157,6 +158,7 @@ CACHES = {
 }
 SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 
 CORS_ORIGIN_WHITELIST = (
     'http://127.0.0.1:8000',

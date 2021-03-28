@@ -66,7 +66,6 @@ class verifications(View):
 
 def login(request):
     if request.COOKIES.get("is_login"):
-        print(4)
         return redirect('/index/success/')
     return render(request, 'account/login.html')
 
@@ -108,6 +107,3 @@ def register(request):
     # template = loader.get_template('account/register.html')
     return render(request, 'account/register.html')
 
-
-def have_login(request):
-    return render(request, 'account/success.html')

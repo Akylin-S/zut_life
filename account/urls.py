@@ -8,5 +8,4 @@ urlpatterns = [
     url('sure1/', views.verifications.as_view()),
     url('register/', views.register),
     url('make_sure/', views.Verification_Register.as_view()),
-    # url('success/', views.have_login)
 ]

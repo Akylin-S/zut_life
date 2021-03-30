@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+  <title>中原工-校园生活</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.css' %}">
+  <script src="{% static '/jquery/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
+  <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+  }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">中原工-校园生活</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+      <li class="nav-item">
+      <a class="nav-link" href="../../../function/forum/1">校园论坛</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">表白墙</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">失物招领</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        校园景色
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="http://www.expoon.com/27712/">校园3D全景</a>
+        <a class="dropdown-item" href="#">校园美景</a>
+      </div>
+    </li>
+
+
+  </ul>
+  <ul class="navbar-nav ml-auto">
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+      <img class="rounded-circle" style="width:40px; height:40px " src="/{{ user.user_img }}"> {{ user.user }}
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="../../account/personal_center/">个人中心</a>
+        <a class="dropdown-item" href="../../account/logout/">退出</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+    <!-- 内容 -->
+    <div class="row">
+
+        <!-- 帖子信息 -->
+        <div class="span12 gallery-single">
+
+            <div class="row" style="margin-bottom: 0">
+
+                <div class="span6">
+                    <!-- 图片 -->
+                    <img src="{{ t_photo }}" class="align-left thumbnail" alt="image">
+                    <!-- 基本信息 -->
+                    <ul class="project-info">
+                        <li><h6>发布时间:</h6> {{ t_time }}</li>
+                        <li><h6>帖子类别:</h6> {{ t_kind }}</li>
+                        <li><h6>作者:</h6> {{ t_uid }}</li>
+                    </ul>
+                </div>
+
+                <div class="span6">
+                    <h2>{{ t_title }}</h2>
+                    <p class="lead">{{ t_introduce }}</p>
+                    <p>{{ t_content }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- 留言模块 -->
+    <div class="row" style="width: 90%;margin: 0 auto;">
+        <h2>我要留言</h2>
+        <form action="/single/{{ tid }}/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div style="margin: 0 auto;">
+                <textarea style="width: 95%;height: 200px;" cols="62" rows="20" name="r_content"></textarea>
+            </div>
+            图片：
+            <input type="file" name="r_photo">
+            <input type="submit" value="提交" style="float: right;">
+        </form>
+    </div>
+
+    <!-- 评论区 -->
+    <div class="row">
+        <h2>所有留言</h2>
+        <div class="span12 gallery-single">
+            <div class="row">
+                <div class="span6" style="width: 100%;">
+                    <ul class="project-info">
+                        {% for r in reply_list %}
+                            <li>
+                                <h6>{{ r.r_uid }} 说:</h6> {{ r.r_content }}
+                                <span style="float: right;">{{ r.r_time }}</span>&nbsp;
+{#                                <a style="float: right;margin-right: 10px">回复</a>#}
+                                {% if admin_uid %}
+
+                                {% endif %}
+                                <a iddd="{{ r.r_id }}" onclick="deleter(this);" style="float: right;margin-right: 10px">删除</a>
+                                <img style="width: 50px;height: 50px;" src="{{ r.r_photo }}">
+                            </li>
+                        {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 评论区结束 -->
+
+
+<footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
+      <div class="container">
+    <hr style="border: 1px  solid #000000;">
+    <div class="row" style="text-align: center;">
+     <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">关于我们</a>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">联系方式</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">旗下网站</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">特别致谢</a></li>
+      </div>
+    </div>
+      </div>
+        <div class="container" style="text-align: center">
+    @学习项目: <a href="https://jq.qq.com/?_wv=1027&k=IBGaNg6u">点击学习交流</a>
+    @github:<a href="https://github.com/Akylin-S/zut_life">项目地址</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
+    </div>
+    </footer>
+
+
+</body>
+</html>

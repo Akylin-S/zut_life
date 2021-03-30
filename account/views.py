@@ -1,3 +1,6 @@
+import os
+
+from django.forms import model_to_dict
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render, redirect
 
@@ -31,11 +34,9 @@ class ImageCodeView(View):
 
 class verifications(View):
     def get(self, request):
-        print(6)
         return render(request, 'account/login.html')
 
     def post(self, request):
-        print(2)
         if request.COOKIES.get('is_login'):
             return redirect('')
         json = request.POST
@@ -73,11 +74,9 @@ def login(request):
 class Verification_Register(View):
 
     def get(self, request):
-        print(33)
         return render(request, 'account/register.html')
 
     def post(self, request):
-        print(3)
         user = request.POST.get('username')
         password = request.POST.get('password')
         confirm_password = request.POST.get('confirmpassword')
@@ -103,7 +102,116 @@ class Verification_Register(View):
 
 
 def register(request):
-    print(1)
     # template = loader.get_template('account/register.html')
     return render(request, 'account/register.html')
 
+
+def logout(request):
+    rep = redirect('/account/login/')
+    rep.delete_cookie("is_login")
+    rep.delete_cookie('user_id')
+    rep.delete_cookie('user_name')
+    rep.delete_cookie('user_img')
+    return rep
+
+
+def persron_center(request):
+    if not request.COOKIES.get("is_login"):
+        return redirect('/account/login/')
+    user = request.COOKIES.get("user_name")
+    dbuser = UserInfo.objects.get(user=user)
+
+    # confession_list = PostInfo.objects.filter(category="confession",reviewed="past")
+    template = loader.get_template('account/personal_center.html')
+    context = {
+        "user": dbuser,
+    }
+    return HttpResponse(template.render(context))
+
+
+class change(View):
+
+    def get(self, request):
+        print(1)
+        return redirect('/account/personal_center/')
+
+    def post(self, request):
+        print(5)
+        if not request.COOKIES.get('is_login'):
+            return redirect('/account/login/')
+        password = request.POST.get('password')
+        password1 = request.POST.get('password1')
+        print(password1)
+        print(password)
+        user = request.COOKIES.get("user_name")
+        dbuser = UserInfo.objects.get(user=user)
+        if password == password1:
+            print(7)
+            dbuser.password = password
+            dbuser.save()
+            return redirect('/account/logout/')
+        else:
+            print(8)
+            return render(request, 'account/personal_center.html', {"user": dbuser, "message_password": '两次输入的密码不同'})
+
+
+class setting(View):
+
+    def get(self, request):
+        return redirect('/account/personal_center/')
+
+    def post(self, request):
+        if not request.COOKIES.get('is_login'):
+            return redirect('/account/login/')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        user_img = request.FILES.get('img')
+        user = request.COOKIES.get("user_name")
+        dbuser = UserInfo.objects.get(user=user)
+        dbuser.email = email
+        dbuser.phone = phone
+        dbuser.user_img = user_img
+        dbuser.save()
+
+class ChangeUserData(View):
+    def get(self, request):
+        return redirect('/account/personal_center/')
+
+    def post(self,request):
+        if not request.COOKIES.get("is_login"):
+            return redirect('/account/login')
+        email = request.POST.get('email')
+        phone = request.POST.get('phone')
+        gender = request.POST['selected']
+        img = request.FILES.get('img')
+        print(type(str(img)))
+        user = request.COOKIES.get("user_name")
+        dbuser = UserInfo.objects.get(user=user)
+        if email:
+            dbuser.email=email
+        if img:
+            mk ='static/img/user_img/'+str(user)
+            if not os.path.exists(mk):
+                os.mkdir(mk)
+            user_img = 'static/img/user_img/'+str(user)+'/'+str(img)
+            print(user_img)
+            f = open(os.path.join(user_img),'wb')
+            for line in img.chunks():
+                f.write(line)
+            f.close()
+            dbuser.user_img=user_img
+        if phone:
+            dbuser.phone=phone
+        dbuser.gender=gender
+        dbuser.save()
+        # phone = json['phone']
+        # user_img = request.FILES.get('img')
+        # print(user_img)
+        # email = json['email']
+        # user_id = request.COOKIES.get("user_id")
+        # dbuser = UserInfo.objects.get(user_id=user_id)
+        # dbuser.phone = phone
+        # dbuser.email = email
+        # dbuser.user_img = user_img
+        # dbuser.save()
+        return redirect('/account/personal_center/')

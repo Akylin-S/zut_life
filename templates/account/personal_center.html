@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+{% load  static %}
+<html lang="en">
+<head>
+  <title>中原工-校园生活</title>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
+  <script src="../../static/jquery/jquery-3.6.0.min.js"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <style>
+  /* Make the image fully responsive */
+  .carousel-inner img {
+      width: 100%;
+      height: 100%;
+  }
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">中原工-校园生活</a>
+
+  <!-- Links -->
+  <ul class="navbar-nav">
+      <li class="nav-item">
+      <a class="nav-link" href="../../function/forum-0-0-0/1">校园论坛</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">表白墙</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="#">失物招领</a>
+    </li>
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+        校园景色
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="http://www.expoon.com/27712/">校园3D全景</a>
+        <a class="dropdown-item" href="#">校园美景</a>
+      </div>
+    </li>
+
+
+  </ul>
+  <ul class="navbar-nav ml-auto">
+
+    <!-- Dropdown -->
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+      <img class="rounded-circle" style="width:40px; height:40px " src="/{{ user.user_img }}"> {{ user.user }}
+      </a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">个人中心</a>
+        <a class="dropdown-item" href="../../account/logout/">退出</a>
+      </div>
+    </li>
+  </ul>
+</nav>
+
+<div class="row" style="padding-top: 5px">
+<!-- 选项卡 -->
+    <div class="col-sm-2"></div>
+    <div class="col-sm-8">
+          <div class="card img-fluid" style="width:100%;margin: 0 auto;">
+    <img class="card-img-top" src="{% static '/account/background.jpg' %}" alt="Card image" style=" height: 200px; border-radius: 5px;">
+    <div class="card-img-overlay">
+        <img class="rounded-circle" style="margin-left: 10px;width:40px; height:40px " src="/{{ user.user_img }}"> {{ user.user }}
+        <p style="margin-left: 10px; margin-top: auto">电话:{{ user.phone }}</p>
+    </div>
+  </div>
+    </div>
+    <div class="col-sm-2"></div>
+
+
+
+    <div class="col-sm-2" ></div>
+    <div class="col-sm-5">
+
+
+{% if message_password %}
+    <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link " data-toggle="tab" href="#home">动态</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#menu1">收藏</a>
+  </li>
+  <li class="nav-item active">
+    <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#menu3">设置</a>
+  </li>
+</ul>
+<!-- 选项卡对应内容 -->
+<div class="tab-content">
+  <div class="tab-pane fade container" id="home">
+
+  </div>
+  <div class="tab-pane fade container" id="menu1">
+
+  </div>
+
+  <div class="tab-pane active  container" id="menu2">
+      <p id="message">{{ message_password }}</p>
+    <form method="post" action="/account/change/">
+        {% csrf_token %}
+     <div class="form-group">
+        <label for="exampleInputPassword1">请输入密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">请再次输入密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">确认更改</button>
+</form>
+  </div>
+  <div class="tab-pane fade container" id="menu3">
+<form>
+  <div class="form-group">
+    <label for="exampleFormControlFile1">Example file input</label>
+    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+  </div>
+</form>
+  </div>
+</div>
+        </div>
+    {% else %}
+      <ul class="nav nav-tabs">
+  <li class="nav-item">
+    <a class="nav-link active" data-toggle="tab" href="#home">动态</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#menu1">收藏</a>
+  </li>
+  <li class="nav-item ">
+    <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" data-toggle="tab" href="#menu3">设置</a>
+  </li>
+</ul>
+    <div class="tab-content">
+  <div class="tab-pane active container" id="home">
+
+  </div>
+  <div class="tab-pane fade container" id="menu1">
+
+  </div>
+
+  <div class="tab-pane fade container" id="menu2">
+    <form method="post" action="/account/change/">
+        {% csrf_token %}
+     <div class="form-group">
+        <label for="exampleInputPassword1">请输入密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password" placeholder="Password">
+    </div>
+    <div class="form-group">
+        <label for="exampleInputPassword1">请再次输入密码</label>
+        <input type="password" class="form-control" id="exampleInputPassword1" name="password1" placeholder="Password">
+    </div>
+    <button type="submit" class="btn btn-primary">确认更改</button>
+</form>
+  </div>
+  <div class="tab-pane fade container" id="menu3">
+<form method="post" action="/account/changeuserdate/"  enctype="multipart/form-data" >
+  <div class="form-group">
+    <label for="exampleFormControlFile1">头像上传</label>
+        <img id="imgshow" style="margin-left: 10px;width:60px; height:60px " src="/{{ user.user_img }}">
+        <input type="file"  id="filed" class="form-control-file" name="img"  accept="image/*"/>
+<div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">邮箱</label>
+    <div class="col-sm-10">
+      <input type="email" class="form-control" name="email"  id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-2 col-form-label">电话</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name = "phone">
+    </div>
+  </div>
+  <fieldset class="form-group row">
+    <legend class="col-form-label col-sm-2 float-sm-left pt-0" >性别</legend>
+    <div class="col-sm-10">
+      <div class="form-check" >
+        <input class="form-check-input male" type="radio" name="selected"  onchange="select()" id="gridRadios1" value="male" checked>
+        <label class="form-check-label" for="gridRadios1">
+          男
+        </label>
+      </div>
+      <div class="form-check" >
+        <input class="form-check-input famale" type="radio" name="selected" onchange="select()" id="gridRadios2" value="famale">
+        <label class="form-check-label" for="gridRadios2">
+          女
+        </label>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group row " >
+    <div class="col-sm-10" style="text-align: center">
+      <button type="submit" style="text-align: center" class="btn btn-primary">确认</button>
+    </div>
+  </div>
+  </div>
+</form>
+  </div>
+</div>
+        </div>
+    {% endif %}
+    <div class="col-sm-3"></div>
+    <div class="col-sm-2"></div>
+</div>
+
+
+
+<footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
+      <div class="container">
+    <hr style="border: 1px  solid #000000;">
+    <div class="row" style="text-align: center;">
+     <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">关于我们</a>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">联系方式</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">旗下网站</a></li>
+      </div>
+      <div class="col-sm-3 col-md-3 col-lg-3">
+     <a href="#" style=" color: gray;">特别致谢</a></li>
+      </div>
+    </div>
+      </div>
+        <div class="container" style="text-align: center">
+    @学习项目: <a href="https://jq.qq.com/?_wv=1027&k=IBGaNg6u">点击学习交流</a>
+    @github:<a href="https://github.com/Akylin-S/zut_life">项目地址</a>
+            <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+    </div>
+    </footer>
+
+
+</body>
+<script>
+	$(document).ready(function() {
+        $('#message').delay(6000).hide(0);
+    });
+   //在input file内容改变的时候触发事件
+
+    $('#filed').change(function(){
+      var file = $('#filed').get(0).files[0];
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload=function(e){
+    //选择所要显示图片的img，要赋值给img的src就是e中target下result里面
+    //的base64编码格式的地址
+        $('#imgshow').get(0).src = e.target.result;
+      }
+    })
+</script>
+</html>

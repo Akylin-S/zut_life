@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
   <title>中原工-校园生活</title>
   <meta charset="utf-8">
-  <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
-  <script src="../../static/jquery/jquery-3.6.0.min.js"></script>
-  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <link rel="stylesheet" href="{% static '/bootstrap/css/bootstrap.css' %}">
+  <script src="{% static '/jquery/jquery-3.6.0.min.js' %}"></script>
+  <script src="{% static '/bootstrap/js/bootstrap.min.js' %}"></script>
   <style>
   /* Make the image fully responsive */
   .carousel-inner img {
@@ -22,13 +23,13 @@
   <!-- Links -->
   <ul class="navbar-nav">
       <li class="nav-item">
-      <a class="nav-link" href="../../function/forum/">校园论坛</a>
+      <a class="nav-link" href="../../../function/forum-0-0-0/1">校园论坛</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">表白墙</a>
+      <a class="nav-link" href="../../confession">表白墙</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">失物招领</a>
+      <a class="nav-link" href="../../lost">失物招领</a>
     </li>
     <li class="nav-item dropdown">
       <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
@@ -50,17 +51,208 @@
       <img class="rounded-circle" style="width:40px; height:40px " src="/{{ user.user_img }}"> {{ user.user }}
       </a>
       <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">个人中心</a>
-        <a class="dropdown-item" href="#">修改密码</a>
-        <a class="dropdown-item" href="#">退出</a>
+        <a class="dropdown-item" href="../../../account/personal_center/">个人中心</a>
+        <a class="dropdown-item" href="../../../account/logout/">退出</a>
       </div>
     </li>
   </ul>
 </nav>
 
+<div class="container">
+  <div class="row" style="padding-top: 10px">
+    <div class="col-sm-8">
+          <div class="row">
+        <div class="col-sm-6">
+          <div class="span5 logo" style="width: 250px">
+            <!--            <a href="index.htm"><img src="img/piccolo-logo.png" alt=""/></a>-->
+            <h5 style="font-size: 28px">中原工 论 坛</h5>
+        </div>
+        </div>
+        <div class="col-sm-6">
+
+        <!-- 搜索框-->
+        <form action="../../../function/forum-0-0-0/1/" method="post" style="margin-left: 0; width: 350px;" class="span5 logo navbar-form navbar-left">
+            {% csrf_token %}
+            <div style="float: left;" class="form-group">
+                <input name="keys" type="text" class="form-control" placeholder="请输入搜索内容">
+            </div>
+            <button style="margin-top: 2px; margin-left: 10px" type="submit" class="btn btn-default">搜索</button>
+        </form>
+        </div>
+    </div>
+    {% if keys %}
+        <nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+
+      <li class="breadcrumb-item" style="color: #ffc107"><a href="../../../function/forum-0-0-0/1" >返回主论坛</a></li>
+    <li class="breadcrumb-item" style="color: #ffc107">搜索内容：{{keys}}</li>
+  </ul>
+            </nav>
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">帖子分类：</li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../../function/forum-0-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})">全部</a></li>
+    <li class="breadcrumb-item"><a href="javascript:post('../../../function/forum-1-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})" >社团</a></li>
+    <li class="breadcrumb-item"><a href="javascript:post('../../../function/forum-2-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})" >学习</a></li>
+    <li class="breadcrumb-item"><a href="javascript:post('../../../function/forum-3-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})" >游戏</a></li>
+    <li class="breadcrumb-item"><a href="javascript:post('../../../function/forum-4-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})" >运动</a></li>
+    <li class="breadcrumb-item"><a href="javascript:post('../../../function/forum-5-{{ reply_limit }}-{{ time_limit }}/1/',{keys:'{{keys}}'})" >其它</a></li>
+  </ul>
+            </nav>
+
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">回复数量：</li>
+    <li class="breadcrumb-item " ><a href="javascript:post('../../all-{{ kid }}-0-{{ time_limit }}/1/',{keys:'{{keys}}'})" class="all">全部</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-1-{{ time_limit }}/1/',{keys:'{{keys}}'})" >大于100</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-2-{{ time_limit }}/1/',{keys:'{{keys}}'})" >30-100</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-3-{{ time_limit }}/1/',{keys:'{{keys}}'})" >低于30</a></li>
+  </ul>
+</nav>
+
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item ">发布时间：</li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-{{ reply_limit }}-0/1/',{keys:'{{keys}}'})" class="all">全部</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-{{ reply_limit }}-1/1/',{keys:'{{keys}}'})" >一个月内</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-{{ reply_limit }}-2/1/',{keys:'{{keys}}'})" >三个月内</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-{{ reply_limit }}-3/1/',{keys:'{{keys}}'})" >半年内</a></li>
+    <li class="breadcrumb-item "><a href="javascript:post('../../all-{{ kid }}-{{ reply_limit }}-4/1/',{keys:'{{keys}}'})" >一年内</a></li>
+  </ul>
+</nav>
+    {% else %}
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">帖子分类：</li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-0-{{ reply_limit }}-{{ time_limit }}/1">全部</a></li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-1-{{ reply_limit }}-{{ time_limit }}/1" >社团</a></li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-2-{{ reply_limit }}-{{ time_limit }}/1" >学习</a></li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-3-{{ reply_limit }}-{{ time_limit }}/1" >游戏</a></li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-4-{{ reply_limit }}-{{ time_limit }}/1" >运动</a></li>
+    <li class="breadcrumb-item"><a href="../../../function/forum-5-{{ reply_limit }}-{{ time_limit }}/1" >其它</a></li>
+  </ul>
+            </nav>
+
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item">回复数量：</li>
+    <li class="breadcrumb-item " ><a href="../../forum-{{ kid }}-0-{{ time_limit }}/1" class="forum">全部</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-1-{{ time_limit }}/1" >大于100</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-2-{{ time_limit }}/1" >30-100</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-3-{{ time_limit }}/1" >低于30</a></li>
+  </ul>
+</nav>
+
+<nav aria-label="breadcrumb">
+  <ul class="breadcrumb">
+    <li class="breadcrumb-item ">发布时间：</li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-{{ reply_limit }}-0/1" class="forum">全部</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-{{ reply_limit }}-1/1" >一个月内</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-{{ reply_limit }}-2/1" >三个月内</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-{{ reply_limit }}-3/1" >半年内</a></li>
+    <li class="breadcrumb-item "><a href="../../forum-{{ kid }}-{{ reply_limit }}-4/1" >一年内</a></li>
+  </ul>
+</nav>
+    {% endif %}
+                 <!-- 列表 -->
+            <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in topics %}
+                        <li class="list-group-item" style="width: 700px" >
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {% if t.t_photo %}
+                            <a href="../../single/{{ t.id }}"><img style="width: 85px;height: 85px" src="{{ t.t_photo }}" alt="主页图"></a>
+                                    {%  else %}
+                            <a href="../../single/{{ t.id }}"><img style="width: 85px;height: 85px" src="static/img/default.jpeg" alt="主页图"></a>
+                                    {% endif %}
+                                    </div>
+                             <div class="col-sm-10">
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p > <a href="../../single/{{ t.id }}">标题：{{ t.t_title }}</a></p>
+                                      </div>
+                                  <div class="col-sm-6">
+                                      <p>简介：{{ t.t_introduce }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.t_content }}</p>
+                                     </div>
+                             </div>
+                            </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+    {% if keys %}
+    <div style="padding-left: 20%">
+        {% if page.has_previous %}
+{# 得到上一页的页码编号 #}
+  <a href="javascript:post('../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{ page.previous_page_number }}/',{keys:'{{keys}}'})">上一页</a>
+{% else %}
+上一页
+{% endif %}
+{# 在页面范围内循环选择一个页面号码 #}
+{% for p in paginator.page_range %}
+{# 如果页面编号等于当前页码序号 #}
+    {% if p == page.number %}
+        {{ p }}
+    {% else %}
+         {# 否则跳转到页码相对应的页面 #}
+        <a href="javascript:post('../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{ p }}/',{keys:'{{keys}}'})">{{ p }}</a>
+    {% endif %}
+{% endfor %}
+{% if page.has_next %}
+      <a href="javascript:post('../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{page.next_page_number }}/',{keys:'{{keys}}'})">下一页</a>
+
+{% else %}
+下一页
+{% endif %}
+    </div>
+    {% else %}
+    <div style="padding-left: 20%">
+        {% if page.has_previous %}
+{# 得到上一页的页码编号 #}
+  <a href="../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{ page.previous_page_number }}">上一页</a>
+{% else %}
+上一页
+{% endif %}
+{# 在页面范围内循环选择一个页面号码 #}
+{% for p in paginator.page_range %}
+{# 如果页面编号等于当前页码序号 #}
+    {% if p == page.number %}
+        {{ p }}
+    {% else %}
+         {# 否则跳转到页码相对应的页面 #}
+        <a href="../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{ p }}">{{ p }}</a>
+    {% endif %}
+{% endfor %}
+{% if page.has_next %}
+  <a href="../../forum-{{ kid }}-{{ reply_limit }}-{{ time_limit }}/{{ page.next_page_number }}">下一页</a>
+{% else %}
+下一页
+{% endif %}
+    </div>
+    {% endif %}
+    </div>
+
+    <div class="col-sm-4" style="color: #6c757d">
+          <div style="margin-left: 63%;width: 20%; top: 70px; background-color: #fff; position: absolute;">
+              <iframe id="fancybox-frame" name="fancybox-frame1593071485209" style="height: 90px;margin-left: 30px;" frameborder="0" scrolling="no" hspace="0"  src="http://i.tianqi.com/index.php?c=code&a=getcode&id=7&h=90&w=225"></iframe>
+            </div>
+      <div style="margin-left: 90%;width: 20%; top:200px; position: absolute;">
+          <a href="../../forumpub">发表帖子</a>
+      </div>
+  </div>
+      </div>
 
 
-<footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
+</div>
+
+<footer class="panel-footer" style="width: 100%; top:100%;position: absolute; overflow: hidden;">
       <div class="container">
     <hr style="border: 1px  solid #000000;">
     <div class="row" style="text-align: center;">
@@ -84,7 +276,27 @@
             <p class="mt-5 mb-3 text-muted">&copy; 2017-2018</p>
     </div>
     </footer>
-
-
 </body>
+
+<script type="text/javascript">
+    function post(url, params) {
+    var temp = document.createElement("form"); //创建form表单
+    temp.action = url;
+    temp.method = "post";
+    temp.style.display = "none";//表单样式为隐藏
+    for (var item in params) {//初始化表单内部的控件
+       //根据实际情况创建不同的标签元素
+        var opt =document.createElement("input");  //添加input标签
+        opt.type="text";   //类型为text
+        opt.id = item;      //设置id属性
+        opt.name = item;    //设置name属性
+        opt.value = params[item];   //设置value属性
+        temp.appendChild(opt);
+    }
+    console.log(temp)
+    document.body.appendChild(temp);
+    temp.submit();
+    return temp;
+}
+</script>
 </html>

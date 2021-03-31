@@ -9,4 +9,5 @@ urlpatterns = [
     url('confession/',views.confession),
     url('lost/', views.lost),
     url(r'^single/(?P<tid>\d+)/', views.single),  # 单个帖子
+    url('scenery/', views.Scenery.as_view())
 ]

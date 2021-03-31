@@ -12,7 +12,7 @@ from django_redis import get_redis_connection
 from .captcha.captcha import captcha
 from account.models import UserInfo
 from . import constants
-
+from account.untils.account import day_visit
 
 class ImageCodeView(View):
     """
@@ -68,6 +68,7 @@ class verifications(View):
 def login(request):
     if request.COOKIES.get("is_login"):
         return redirect('/index/success/')
+    day_visit(request)
     return render(request, 'account/login.html')
 
 

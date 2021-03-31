@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <title>中原工-校园生活</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../../static/bootstrap/css/bootstrap.css">
+  <script src="../../static/jquery/jquery-3.6.0.min.js"></script>
+  <script src="../../static/bootstrap/js/bootstrap.min.js"></script>
+  <script type="text/javascript" src="{% static 'amdin/js/echarts.js' %}"></script>
+  <style>
+  /* Make the image fully responsive */
+    body{
+        background: #dae0e5;
+    }
+  .bg-light {
+    background-color: #212529 !important;
+}
+  .visit_contain{
+	float:left;
+	margin-top:10px;
+	width:100%;
+}
+#history_visit{
+	background:#FFF;
+	margin-left: 10px;
+	width:1000px;
+	height:300px;
+	box-shadow: #666 0px 0px 2px;
+}
+  </style>
+</head>
+<body>
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+  <!-- Brand -->
+  <a class="navbar-brand" href="#">中原工-校园生活后台管理</a>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3"  >
+        <hr class="nav flex-column" style='background-color:white; height:1px; border:none;'>
+          <li class="nav-item">
+            <a class="nav-link active" href="../home">
+              <span data-feather="home"></span>
+              首页 <span class="sr-only">(current)</span>
+            </a>
+          </li>
+                              <hr  style='background-color:white; height:1px; border:none;'/>
+          <li class="nav-item">
+            <a class="nav-link" href="../user">
+              <span data-feather="file"></span>
+              用户管理
+            </a>
+          </li>
+                              <hr  style='background-color:white; height:1px; border:none;'/>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="shopping-cart"></span>
+              论坛管理
+            </a>
+          </li>
+                                <hr  style='background-color:white; height:1px; border:none;'/>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="users"></span>
+              表白墙管理
+            </a>
+          </li>
+                              <hr  style='background-color:white; height:1px; border:none;'/>
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="bar-chart-2"></span>
+              失物招领管理
+            </a>
+          </li>
+                    <hr  style='background-color:white; height:1px; border:none;'/>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#">
+              <span data-feather="layers"></span>
+              校园风景管理
+            </a>
+          </li>
+                    <hr  style='background-color:white; height:1px; border:none;'/>
+                    <li class="nav-item">
+                        <a class="nav-link" href="../logout">
+              <span data-feather="layers"></span>
+               退出
+            </a>
+                    </li>
+                    <hr  style='background-color:white; height:1px; border:none;'/>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+                    <li class="nav-item"> </li>
+        </ul>
+      </div>
+    </nav>
+
+    <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+                 <h1 class="display-8" style="text-align: center">论坛管理</h1>
+
+             <div class="row clearfix">
+                <ul class="list-group">
+                    <!-- 帖子列表 -->
+                    {% for t in topic %}
+                        <li class="list-group-item" style="text-align:center ; width: 250%" >
+                             <div class="row">
+                                  <div class="col-sm-4">
+                                 <p > 标题：{{t.t_title}}</p>
+                                      </div>
+                                  <div class="col-sm-4">
+                                      <p>简介：{{ t.t_introduce }}</p>
+                                      </div>
+                                    <div class="col-sm-2">
+                                        <p >种类：{{ t.t_kind }}</p>
+                                     </div>
+                                   <div class="col-sm-2">
+                                       <p><a a href="javascript:post('',{id:'{{t.id}}'})" >删除</a></p>
+                                      </div>
+                             </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+    </main>
+  </div>
+</div>
+
+</body>
+<script type="text/javascript">
+    function post(url, params) {
+    var temp = document.createElement("form"); //创建form表单
+    temp.action = url;
+    temp.method = "post";
+    temp.style.display = "none";//表单样式为隐藏
+    for (var item in params) {//初始化表单内部的控件
+       //根据实际情况创建不同的标签元素
+        var opt =document.createElement("input");  //添加input标签
+        opt.type="text";   //类型为text
+        opt.id = item;      //设置id属性
+        opt.name = item;    //设置name属性
+        opt.value = params[item];   //设置value属性
+        temp.appendChild(opt);
+    }
+    console.log(temp)
+    document.body.appendChild(temp);
+    temp.submit();
+    return temp;
+}
+</script>
+</html>

@@ -13,6 +13,19 @@
       width: 100%;
       height: 100%;
   }
+      .pic02 {
+      display: none;
+      top: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .pic02 img {
+      z-index: 100;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+    }
   </style>
 </head>
 <body>
@@ -61,35 +74,35 @@
   <div class="row" style="padding-top: 10px">
     <div class="col-sm-9">
         <div class="jumbotron">
-  <h1 class="display-8">{{ t_title }}</h1>
+  <h1 class="display-8">{{ confession.c_title }}</h1>
             <span>
-                {% if t_kind == 1 %}
-                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：社团</p>
-                {% elif t_kind == 2 %}
-                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：学习</p>
-                {% elif t_kind == 3 %}
-                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：游戏</p>
-                {% elif t_kind == 4 %}
-                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：运动</p>
+                {% if confession.c_kind == '1' %}
+                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：卖室友</p>
                 {% else %}
-                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：其它</p>
+                <p>作者：{{ user.user }}&nbsp&nbsp&nbsp标签：表白</p>
                 {% endif %}
-                <p>{{t_time }}</p>
+                <p>{{ confession.create_time }}</p>
             </span>
     <hr class="my-4">
-  <p class="lead">简介：{{ t_introduce }}</p>
+  <p class="lead">联系方式：{{ confession.c_relation }}</p>
   <hr class="my-4">
-                <p style="text-indent:2em;">{{ t_content }}<p>
+                <p style="text-indent:2em;">{{ confession.c_text }}<p>
 
-                 <img class="card-img-top" src="{{ t_photo }}" alt="图片">
+                                                                 <div id="show-box">
+                                                {% for i in img %}
+
+                                        <img class='c_image pic01' style="padding-left:20px;max-width: 300px;max-height: 420px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
 </div>
 <div>
- <form  action="../{{ tid }}/" method="post" enctype="multipart/form-data">
+ <form  action="../{{ confession.id }}/" method="post" enctype="multipart/form-data">
         {% csrf_token %}
           <p class="display-7" style="text-align: center;font-weight: bolder">留言</p>
      <table>
           <tr>
-            <th valign="top">帖子留言</th>
+            <th valign="top">留言:</th>
             <td>
                 <div class="body_count">
                     <textarea style="width: 700px;" cols="62" rows="5" name="r_content"></textarea>
@@ -128,12 +141,6 @@
                     <ul class="list-group list-group-flush">
                         {% for r in reply_list %}
                             <li class="list-group-item">
-
-
-{#                                <a style="float: right;margin-right: 10px">回复</a>#}
-                                {% if admin_uid %}
-                                <a iddd="{{ r.r_id }}" onclick="deleter(this);" style="float: right;margin-right: 10px">删除</a>
-                                                                {% endif %}
                                 {% if  r.r_photo != '/' and r.r_photo != none %}
                                     <div class="card" style="width: 18rem;">
                                                                         <img class="card-img-top"   src="{{ r.r_photo }}">
@@ -164,6 +171,9 @@
   </div>
       </div>
 </div>
+    <div class="pic02">
+    <img id="pic02" src="#" alt="">
+  </div>
 <footer class="footer navbar-fixed-bottom ">
     <div class="container">
                   <div class="container">
@@ -191,4 +201,26 @@
     </div>
 </footer>
 </body>
+<script>
+        	$(document).ready(function() {
+            	$(".c_image").each(function(e){
+		var file=this.src;
+		var type = file.split(".")[file.split(".").length-1];
+		if(type=="mp4"){
+            console.log($(this))
+            $(this).replaceWith('<video   style="padding-left:20px; width: 300px; height: 420px; vertical-align:middle; margin:auto;"\n src="'+ file +'"  controls >')
+        }
+
+	});
+    });
+        		  $('.pic01').on('click', function () {
+      var picSrc = $(this).attr('src')
+      $('.pic02 img').attr('src', picSrc)
+      $('.pic02').show()
+
+    })
+    $('.pic02').on('click', function () {
+      $('.pic02').hide()
+    })
+</script>
 </html>

@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'home/', views.home.as_view()),
     url(r'user/', views.user_admin.as_view()),
     url(r'forum/', views.forum_admin.as_view()),
-    url(r'logout/', views.logout)
+    url(r'scenery/', views.admin_scenery.as_view()),
+    url(r'logout/', views.logout),
 ]

@@ -41,12 +41,10 @@ class verifications(View):
             return redirect('')
         json = request.POST
         user = json['username']
-        print(user)
         password = json['password']
         message = '账号不存在'
         try:
             dbuser = UserInfo.objects.get(user=user)
-            print(dbuser.user)
         except:
             print('error')
             return render(request, 'account/login.html', {"message": message})

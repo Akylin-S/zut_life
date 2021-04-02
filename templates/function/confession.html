@@ -12,6 +12,20 @@
       width: 100%;
       height: 100%;
   }
+.divcss5 {
+      max-height:250px;
+      _height:expression(this.height > 202px ? "250px" : this.HEIGHT);
+      max-width:175px;
+      _width:expression(this.width > 175px ? "175px" : this.width);
+  }
+
+
+        /*end*/
+        #img-box li {
+            display: inline-block;
+            position: relative;
+        }
+
   </style>
 </head>
 <body>
@@ -25,7 +39,7 @@
       <a class="nav-link" href="../../function/forum-0-0-0/1">校园论坛</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">表白墙</a>
+      <a class="nav-link" href="">表白墙</a>
     </li>
     <li class="nav-item">
       <a class="nav-link" href="../lost">失物招领</a>
@@ -36,7 +50,7 @@
       </a>
       <div class="dropdown-menu">
         <a class="dropdown-item" href="http://www.expoon.com/27712/">校园3D全景</a>
-        <a class="dropdown-item" href="../scenery">校园美景</a>
+        <a class="dropdown-item" href="../scenery/1">校园美景</a>
       </div>
     </li>
 
@@ -57,9 +71,291 @@
   </ul>
 </nav>
 
+  <div class="row">
+      <div style="" class="col-sm-2">
+          </div>
+<div class="col-sm-8">
+<div class="tab-content" id="v-pills-tabContent">
+  <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+     <h1 class="display-3" >表白墙</h1>
+      <hr style="color:black "/>
+                  <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in confession %}
+                        <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p> <a href="../confessionsingle/{{ t.id }}/" style="color: tomato">{{ t.c_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.c_kind == "0" %}
+                                      <p>大胆表白</p>
+                                       {% else %}
+                                      <p>帮室友找朋友</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in c_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+
+  </div>
+  <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab">
+          <h1 class="display-3" >表白</h1>
+      <hr style="color:black "/>
+                        <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in confession %}
+                        {% if t.c_kind == "0" %}
+                                                <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p > <a href="../confessionsingle/{{ t.id }}">标题：{{ t.c_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.c_kind == "0" %}
+                                      <p>大胆表白</p>
+                                       {% else %}
+                                      <p>帮室友找朋友</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in c_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+  </div>
+  <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">
+      <h1 class="display-3" >卖室友</h1>
+
+        <hr style="color:black "/>
+                                      <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in confession %}
+                        {% if t.c_kind == "1" %}
+                                                <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-4">
+                                 <p > <a href="../confessionsingle/{{ t.id }}">标题：{{ t.c_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.c_kind == "0" %}
+                                      <p>大胆表白</p>
+                                       {% else %}
+                                      <p>帮室友找朋友</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in c_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+
+                        {% endif %}
+                    {% endfor %}
+                </ul>
+            </div>
+
+  </div>
+  <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">
+      <h1 class="display-3" >发表</h1>
+      <hr style="color:black "/>
+       <div>
+<form accept-charset="UTF-8" action="/function/confession/"  id="new_topic" method="post"  enctype="multipart/form-data">
+    {% csrf_token %}
+    <table width="100%" border="0" cellspacing="0" cellpadding="6">
+        <colgroup>
+            <col width="140">
+            <col>
+        </colgroup>
+        <tbody>
+
+        <tr>
+            <th>标题</th>
+            <td>
+                <label>
+                    <input required id="topic_title" maxlength="80" name="c_title" size="60" type="text">
+                </label>
+            </td>
+        </tr>
+
+               <tr>
+            <th>联系方式：</th>
+            <td>
+                <label>
+                    <input required id="topic_title" maxlength="1000" name="c_relation" size="60" type="text">
+                </label>
+            </td>
+        </tr>
+
+        <tr>
+            <th valign="top">帖子</th>
+            <td>
+                <div class="body_count">
+                    <textarea style="width: 700px;" cols="62" rows="10" name="c_text"></textarea>
+                </div>
+            </td>
+        </tr>
+
+        <tr>
+            <th>相关图片/视频(可多选)</th>
+            <td>
+
+                    <!-- 图片上传 -->
+<div>
+    <a href="javascript:;" class="file">
+        <input type="file"   name="c_picture" value="选择文件" id="uploadfile" accept=".mp4,.jpg" multiple>
+    </a>
+    <blockquote  style="margin-top: 10px; text-align:center;display:flex ;">
+        <div class="row" id="img-box">
+
+        </div>
+    </blockquote>
+</div>
+
+            </td>
+        </tr>
 
 
-<footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
+
+        <tr>
+            <th>类别</th>
+            <td>
+                <div>
+                    <select name="c_kind">
+                        <option value="0">表白</option>
+                        <option value="1">卖室友</option>
+
+                    </select>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <th></th>
+            <td>
+                <button class="btn btn-large" type="submit">发表</button>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</form>
+        </div>
+  </div>
+</div>
+ </div>
+         <div style="" class="col-sm-2">
+                <div style="width: 20%; top: 70px; background-color: #fff; position: absolute;">
+              <iframe id="fancybox-frame" name="fancybox-frame1593071485209" style="height: 90px;margin-left: 30px;" frameborder="0" scrolling="no" hspace="0"  src="http://i.tianqi.com/index.php?c=code&a=getcode&id=7&h=90&w=225"></iframe>
+            </div>
+      <div class="nav flex-column nav-pills" style="margin-top: 100%" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+
+  <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">全部</a>
+  <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">表白</a>
+  <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">卖室友</a>
+  <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">发表</a>
+  <form action="../confessions/" method="post" style="margin-left: 0; width: 350px;" class="span5 logo navbar-form navbar-left">
+            {% csrf_token %}
+            <div style="float: left;" class="form-group">
+                <input name="keys" type="text" class="form-control" placeholder="请输入搜索内容">
+            </div>
+            <button style="margin-top: 2px; margin-left: 10px" type="submit" class="btn btn-default">搜索</button>
+        </form>
+      {% if keys %}
+         <strong>
+                  <a href="../confession" >查看全部</a>
+              </strong>
+          <p >
+              <strong>
+                  筛选条件：
+              </strong>
+          <p style="color: #ffca2c">
+              {{ keys }}
+          </p>
+
+          </p>
+          {% endif %}
+      </div>
+</div>
+</div>
+
+
+<footer class="footer navbar-fixed-bottom ">
       <div class="container">
     <hr style="border: 1px  solid #000000;">
     <div class="row" style="text-align: center;">
@@ -86,4 +382,56 @@
 
 
 </body>
+<script>
+    	$(document).ready(function() {
+            	$(".c_image").each(function(e){
+		var file=this.src;
+		var type = file.split(".")[file.split(".").length-1];
+		if(type=="mp4"){
+            console.log($(this))
+            $(this).replaceWith('<video   style="width: 100px; height: 140px; vertical-align:middle; margin:auto;"\n src="'+ file +'"  controls >')
+        }
+
+	});
+    });
+
+     //-----------当选中图片时显示图片----------------
+    var input=document.getElementById("uploadfile");
+    var filelist=[];
+    var count=0
+    // 当用户上传时触发事件
+    input.onchange=function(e){
+        for(let i=0;i<count;i++ ){
+                    $('#up').remove()
+        }
+        readFile(e.target);
+    }
+    //处理图片并添加到dom中的函数
+    var readFile=function(obj){
+        // 获取input里面的文件组
+        var fileList=obj.files;
+        //对文件组进行遍历，可以到控制台打印出fileList去看看
+        for(var i=0;i<fileList.length;i++){
+            console.log(i)
+            var num = 0
+            var reader= new FileReader();
+            reader.readAsDataURL(fileList[i]);
+            reader.filename = fileList[i].name;
+            // 当文件读取成功时执行的函数
+            reader.onload=function(e){
+                    num = num+1
+                    var flies = e.currentTarget.filename.split(".")[1];
+                    if(flies=="jpg"){
+                        $('#img-box').append('<p class="col-sm-3 " id = "up" style="padding-top:1%;margin:auto; vertical-align:middle;"><img class="divcss5"   style="vertical-align:middle;padding-right5%;padding-left: 5%; margin:auto;"\n src="'+ e.currentTarget.result +'" alt="'+ e.currentTarget.name +'" ></p>')
+                    }else if(flies=="mp4") {
+                        console.log(2)
+                        $('#img-box').append('<p class="col-sm-3 " id="up" style="padding-top:1%;margin:auto; vertical-align:middle;" ><video class ="divcss5"  controls style="vertical-align:middle;padding-left:3%;margin:auto;" type="video/mp4"><source src="'+e.currentTarget.result+'" type="video/mp4"> </video></p>')
+                    } else {
+                        alert('只支持jpg图片和mp4视频格式')
+                    }
+            }
+        }
+        count=fileList.length
+    }
+</script>
 </html>

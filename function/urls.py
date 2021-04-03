@@ -9,7 +9,9 @@ urlpatterns = [
     url(r'confession/', views.v_confession.as_view()),
     url(r'confessions/', views.search_confession),
     url(r'^confessionsingle/(?P<cid>\d+)/$', views.single_confession.as_view()),
+    url(r'^lostsingle/(?P<cid>\d+)/$', views.single_lost.as_view()),
     url(r'lost/', views.v_lost.as_view()),
+    url(r'searchl/', views.search_lost),
     url(r'^single/(?P<tid>\d+)/', views.single),  # 单个帖子
     url(r'^scenery/(?P<page_number>\d+)/$', views.cenery.as_view())
 ]

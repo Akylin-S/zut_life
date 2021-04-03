@@ -15,7 +15,7 @@
   }
   </style>
 </head>
-<body>
+<div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <!-- Brand -->
   <a class="navbar-brand" href="#">中原工-校园生活</a>
@@ -75,16 +75,11 @@
 
 
     <div class="col-sm-2" ></div>
-    <div class="col-sm-5">
-
-
-{% if message_password %}
+    <div class="col-sm-8">
+        {% if message_password %}
     <ul class="nav nav-tabs">
   <li class="nav-item">
     <a class="nav-link " data-toggle="tab" href="#home">动态</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#menu1">收藏</a>
   </li>
   <li class="nav-item active">
     <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
@@ -98,10 +93,6 @@
   <div class="tab-pane fade container" id="home">
 
   </div>
-  <div class="tab-pane fade container" id="menu1">
-
-  </div>
-
   <div class="tab-pane active  container" id="menu2">
       <p id="message">{{ message_password }}</p>
     <form method="post" action="/account/change/">
@@ -132,9 +123,6 @@
   <li class="nav-item">
     <a class="nav-link active" data-toggle="tab" href="#home">动态</a>
   </li>
-  <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#menu1">收藏</a>
-  </li>
   <li class="nav-item ">
     <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
   </li>
@@ -146,11 +134,8 @@
   <div class="tab-pane active container" id="home">
 
   </div>
-  <div class="tab-pane fade container" id="menu1">
 
-  </div>
-
-  <div class="tab-pane fade container" id="menu2">
+  <div class="tab-pane fade " id="menu2">
     <form method="post" action="/account/change/">
         {% csrf_token %}
      <div class="form-group">
@@ -164,27 +149,27 @@
     <button type="submit" class="btn btn-primary">确认更改</button>
 </form>
   </div>
-  <div class="tab-pane fade container" id="menu3">
+  <div class="tab-pane fade " id="menu3">
 <form method="post" action="/account/changeuserdate/"  enctype="multipart/form-data" >
   <div class="form-group">
     <label for="exampleFormControlFile1">头像上传</label>
         <img id="imgshow" style="margin-left: 10px;width:60px; height:60px " src="/{{ user.user_img }}">
         <input type="file"  id="filed" class="form-control-file" name="img"  accept="image/*"/>
 <div class="form-group row">
-    <label for="inputEmail3" class="col-sm-2 col-form-label">邮箱</label>
-    <div class="col-sm-10">
+    <label for="inputEmail3" class="col-sm-1 col-form-label">邮箱</label>
+    <div class="col-sm-11">
       <input type="email" class="form-control" name="email"  id="inputEmail3">
     </div>
   </div>
   <div class="form-group row">
-    <label for="inputPassword3" class="col-sm-2 col-form-label">电话</label>
-    <div class="col-sm-10">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">电话</label>
+    <div class="col-sm-11">
       <input type="text" class="form-control" name = "phone">
     </div>
   </div>
   <fieldset class="form-group row">
-    <legend class="col-form-label col-sm-2 float-sm-left pt-0" >性别</legend>
-    <div class="col-sm-10">
+    <legend class="col-form-label col-sm-1 float-sm-left pt-0" >性别</legend>
+    <div class="col-sm-11">
       <div class="form-check" >
         <input class="form-check-input male" type="radio" name="selected"  onchange="select()" id="gridRadios1" value="male" checked>
         <label class="form-check-label" for="gridRadios1">
@@ -210,7 +195,9 @@
 </div>
         </div>
     {% endif %}
-    <div class="col-sm-3"></div>
+
+    </div>
+
     <div class="col-sm-2"></div>
 </div>
 

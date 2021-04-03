@@ -82,34 +82,34 @@
                 <ul class="list-group">
 
                     <!-- 帖子列表 -->
-                    {% for t in confession %}
+                    {% for t in lost %}
                         <li class="list-group-item" style="width: 700px" >
 
                              <div >
                              <div class="row">
                                   <div class="col-sm-6">
-                                 <p> <a href="../confessionsingle/{{ t.id }}/" style="color: tomato">{{ t.c_title }}</a></p>
+                                 <p> <a href="../lostsingle/{{ t.id }}/" style="color: tomato">{{ t.l_title }}</a></p>
                                       </div>
                                    <div class="col-sm-6">
-                                       {% if t.c_kind == "0" %}
-                                      <p>大胆表白</p>
+                                       {% if t.l_kind == "0" %}
+                                      <p>人寻物</p>
                                        {% else %}
-                                      <p>帮室友找朋友</p>
+                                      <p>物寻人</p>
                                        {% endif %}
                                       </div>
                                   <div class="col-sm-12">
-                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.l_relation }}</p>
                                       </div>
                                  <div class="col-sm-12">
-                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.l_text }}</p>
                                      </div>
                                                                  <div class="row col-sm-12">
-                                        {% for k,v in c_images.items %}
+                                        {% for k,v in l_images.items %}
                                             {% if k == t.id %}
                                                 <div id="show-box">
                                                 {% for i in v %}
 
-                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                        <img class='l_image' style="width: 100px;height: 140px" src="{{ i.l_picture }}" alt="主页图">
                                                 {% endfor %}
                                                                                             </div>
 
@@ -132,35 +132,35 @@
                 <ul class="list-group">
 
                     <!-- 帖子列表 -->
-                    {% for t in confession %}
-                        {% if t.c_kind == "0" %}
+                    {% for t in lost %}
+                        {% if t.l_kind == "0" %}
                                                 <li class="list-group-item" style="width: 700px" >
 
                              <div >
                              <div class="row">
                                   <div class="col-sm-6">
-                                 <p > <a href="../confessionsingle/{{ t.id }}">标题：{{ t.c_title }}</a></p>
+                                 <p > <a href="../lostsingle/{{ t.id }}">标题：{{ t.l_title }}</a></p>
                                       </div>
                                    <div class="col-sm-6">
-                                       {% if t.c_kind == "0" %}
-                                      <p>大胆表白</p>
+                                       {% if t.l_kind == "0" %}
+                                      <p>人寻物</p>
                                        {% else %}
-                                      <p>帮室友找朋友</p>
+                                      <p>物寻人</p>
                                        {% endif %}
                                       </div>
                                   <div class="col-sm-12">
-                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.l_relation }}</p>
                                       </div>
                                  <div class="col-sm-12">
-                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.l_text }}</p>
                                      </div>
                                                                  <div class="row col-sm-12">
-                                        {% for k,v in c_images.items %}
+                                        {% for k,v in l_images.items %}
                                             {% if k == t.id %}
                                                 <div id="show-box">
                                                 {% for i in v %}
 
-                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                        <img class='l_image' style="width: 100px;height: 140px" src="{{ i.l_picture }}" alt="主页图">
                                                 {% endfor %}
                                                                                             </div>
 
@@ -186,35 +186,35 @@
                 <ul class="list-group">
 
                     <!-- 帖子列表 -->
-                    {% for t in confession %}
-                        {% if t.c_kind == "1" %}
+                    {% for t in lost %}
+                        {% if t.l_kind == "1" %}
                                                 <li class="list-group-item" style="width: 700px" >
 
                              <div >
                              <div class="row">
                                   <div class="col-sm-4">
-                                 <p > <a href="../confessionsingle/{{ t.id }}">标题：{{ t.c_title }}</a></p>
+                                 <p > <a href="../lostsingle/{{ t.id }}">标题：{{ t.l_title }}</a></p>
                                       </div>
                                    <div class="col-sm-6">
-                                       {% if t.c_kind == "0" %}
+                                       {% if t.l_kind == "0" %}
                                       <p>大胆表白</p>
                                        {% else %}
                                       <p>帮室友找朋友</p>
                                        {% endif %}
                                       </div>
                                   <div class="col-sm-12">
-                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.l_relation }}</p>
                                       </div>
                                  <div class="col-sm-12">
-                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.l_text }}</p>
                                      </div>
                                                                  <div class="row col-sm-12">
-                                        {% for k,v in c_images.items %}
+                                        {% for k,v in l_images.items %}
                                             {% if k == t.id %}
                                                 <div id="show-box">
                                                 {% for i in v %}
 
-                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                        <img class='l_image' style="width: 100px;height: 140px" src="{{ i.l_picture }}" alt="主页图">
                                                 {% endfor %}
                                                                                             </div>
 
@@ -249,7 +249,7 @@
             <th>标题</th>
             <td>
                 <label>
-                    <input required id="topic_title" maxlength="80" name="c_title" size="60" type="text">
+                    <input required id="topil_title" maxlength="80" name="l_title" size="60" type="text">
                 </label>
             </td>
         </tr>
@@ -258,7 +258,7 @@
             <th>联系方式：</th>
             <td>
                 <label>
-                    <input required id="topic_title" maxlength="1000" name="c_relation" size="60" type="text">
+                    <input required id="topil_title" maxlength="1000" name="l_relation" size="60" type="text">
                 </label>
             </td>
         </tr>
@@ -267,7 +267,7 @@
             <th valign="top">内容</th>
             <td>
                 <div class="body_count">
-                    <textarea style="width: 700px;" cols="62" rows="10" name="c_text"></textarea>
+                    <textarea style="width: 700px;" cols="62" rows="10" name="l_text"></textarea>
                 </div>
             </td>
         </tr>
@@ -279,7 +279,7 @@
                     <!-- 图片上传 -->
 <div>
     <a href="javascript:;" class="file">
-        <input type="file"   name="c_picture" value="选择文件" id="uploadfile" accept=".mp4,.jpg" multiple>
+        <input type="file"   name="l_picture" value="选择文件" id="uploadfile" accept=".mp4,.jpg" multiple>
     </a>
     <blockquote  style="margin-top: 10px; text-align:center;display:flex ;">
         <div class="row" id="img-box">
@@ -295,7 +295,7 @@
             <th>类别</th>
             <td>
                 <div>
-                    <select name="c_kind">
+                    <select name="l_kind">
                         <option value="0">人寻物</option>
                         <option value="1">物寻人</option>
                     </select>
@@ -325,7 +325,7 @@
   <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">人寻物</a>
   <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">物寻人</a>
   <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">发表</a>
-  <form action="../lost/" method="post" style="margin-left: 0; width: 350px;" class="span5 logo navbar-form navbar-left">
+  <form action="../searchl/" method="post" style="margin-left: 0; width: 350px;" class="span5 logo navbar-form navbar-left">
             {% csrf_token %}
             <div style="float: left;" class="form-group">
                 <input name="keys" type="text" class="form-control" placeholder="请输入搜索内容">
@@ -378,7 +378,7 @@
 </body>
 <script>
     	$(document).ready(function() {
-            	$(".c_image").each(function(e){
+            	$(".l_image").each(function(e){
 		var file=this.src;
 		var type = file.split(".")[file.split(".").length-1];
 		if(type=="mp4"){

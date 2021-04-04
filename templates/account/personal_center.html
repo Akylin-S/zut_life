@@ -13,8 +13,26 @@
       width: 100%;
       height: 100%;
   }
+  .divcss5 {
+      max-height:250px;
+      _height:expression(this.height > 250 ? "250px" : this.HEIGHT);
+  }
+    .pic02 {
+      display: none;
+      top: 0;
+      background: rgba(0, 0, 0, 0.5);
+    }
+
+    .pic02 img {
+      z-index: 100;
+      position: fixed;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      left: 50%;
+    }
   </style>
 </head>
+<body class="home win">
 <div>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
   <!-- Brand -->
@@ -74,27 +92,171 @@
 
 
 
-    <div class="col-sm-2" ></div>
+    <div class="col-sm-2" >
+            <div class="nav flex-column nav-pills state" id="v-pills-tab" role="tablist" aria-orientation="vertical" style="margin-left:20%;text-align:center;margin-top: 30%;max-width: fit-content">
+      <a class="nav-link active" id="v-pills-home-tab" data-toggle="pill" href="#v-pills-home" role="tab" aria-controls="v-pills-home" aria-selected="true">帖子</a>
+      <a class="nav-link" id="v-pills-profile-tab" data-toggle="pill" href="#v-pills-profile" role="tab" aria-controls="v-pills-profile" aria-selected="false">表白</a>
+      <a class="nav-link" id="v-pills-messages-tab" data-toggle="pill" href="#v-pills-messages" role="tab" aria-controls="v-pills-messages" aria-selected="false">失物招领</a>
+      <a class="nav-link" id="v-pills-settings-tab" data-toggle="pill" href="#v-pills-settings" role="tab" aria-controls="v-pills-settings" aria-selected="false">图片</a>
+    </div>
+    </div>
     <div class="col-sm-8">
         {% if message_password %}
-    <ul class="nav nav-tabs">
+      <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link " data-toggle="tab" href="#home">动态</a>
+    <a class="nav-link active"  id="state" data-toggle="tab"  href="#home">动态</a>
   </li>
-  <li class="nav-item active">
-    <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
+  <li class="nav-item ">
+    <a class="nav-link" data-toggle="tab"  id="password" href="#menu2">修改密码</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#menu3">设置</a>
+    <a class="nav-link" data-toggle="tab" id="info" href="#menu3">设置</a>
   </li>
 </ul>
-<!-- 选项卡对应内容 -->
-<div class="tab-content">
-  <div class="tab-pane fade container" id="home">
+    <div class="tab-content">
+<div class="tab-pane active container" id="home">
+  <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="row clearfix">
+                <ul class="list-group">
 
+                    <!-- 帖子列表 -->
+                    {% for t in topics %}
+                        <li class="list-group-item" style="width: 700px" >
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {% if t.t_photo %}
+                            <a href="../../function/single/{{ t.id }}"><img style="width: 85px;height: 85px" src="{{ t.t_photo }}" alt="主页图"></a>
+                                    {%  else %}
+                            <a href="../../function/single/{{ t.id }}"><img style="width: 85px;height: 85px" src="static/img/default.jpeg" alt="主页图"></a>
+                                    {% endif %}
+                                    </div>
+                             <div class="col-sm-10">
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p > <a href="../../function/single/{{ t.id }}">标题：{{ t.t_title }}</a></p>
+                                      </div>
+                                  <div class="col-sm-6">
+                                      <p>简介：{{ t.t_introduce }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.t_content }}</p>
+                                     </div>
+                             </div>
+                            </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in confession %}
+                        <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p> <a href="../../function/confessionsingle/{{ t.id }}/" style="color: tomato">{{ t.c_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.c_kind == "0" %}
+                                      <p>大胆表白</p>
+                                       {% else %}
+                                      <p>帮室友找朋友</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in c_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div></div>
+      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">  <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in lost %}
+                        <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p> <a href="../../function/lostsingle/{{ t.id }}/" style="color: tomato">{{ t.l_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.l_kind == "0" %}
+                                      <p>人寻物</p>
+                                       {% else %}
+                                      <p>物寻人</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.l_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.l_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in l_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='l_image' style="width: 100px;height: 140px" src="{{ i.l_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div></div>
+      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">        <div class="row">
+{% for s in senery %}
+                      <div class="col-sm-4 " style="margin-top:1%; text-align: center">
+<div class="card" style="width: 18rem;margin:auto">
+  <img class="card-img-top divcss5 pic01" src="{{ s.s_picture }}" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">{{ s.s_text }}</p>
   </div>
-  <div class="tab-pane active  container" id="menu2">
-      <p id="message">{{ message_password }}</p>
+</div>
+</div>
+{% endfor %}
+        </div></div>
+    </div>
+  </div>
+
+  <div class="tab-pane fade " id="menu2">
+            <p id="message">{{ message_password }}</p>
     <form method="post" action="/account/change/">
         {% csrf_token %}
      <div class="form-group">
@@ -108,11 +270,46 @@
     <button type="submit" class="btn btn-primary">确认更改</button>
 </form>
   </div>
-  <div class="tab-pane fade container" id="menu3">
-<form>
+  <div class="tab-pane fade " id="menu3">
+<form method="post" action="/account/changeuserdate/"  enctype="multipart/form-data" >
   <div class="form-group">
-    <label for="exampleFormControlFile1">Example file input</label>
-    <input type="file" class="form-control-file" id="exampleFormControlFile1">
+    <label for="exampleFormControlFile1">头像上传</label>
+        <img id="imgshow" style="margin-left: 10px;width:60px; height:60px " src="/{{ user.user_img }}">
+        <input type="file"  id="filed" class="form-control-file" name="img"  accept="image/*"/>
+<div class="form-group row">
+    <label for="inputEmail3" class="col-sm-1 col-form-label">邮箱</label>
+    <div class="col-sm-11">
+      <input type="email" class="form-control" name="email"  id="inputEmail3">
+    </div>
+  </div>
+  <div class="form-group row">
+    <label for="inputPassword3" class="col-sm-1 col-form-label">电话</label>
+    <div class="col-sm-11">
+      <input type="text" class="form-control" name = "phone">
+    </div>
+  </div>
+  <fieldset class="form-group row">
+    <legend class="col-form-label col-sm-1 float-sm-left pt-0" >性别</legend>
+    <div class="col-sm-11">
+      <div class="form-check" >
+        <input class="form-check-input male" type="radio" name="selected"  onchange="select()" id="gridRadios1" value="male" checked>
+        <label class="form-check-label" for="gridRadios1">
+          男
+        </label>
+      </div>
+      <div class="form-check" >
+        <input class="form-check-input famale" type="radio" name="selected" onchange="select()" id="gridRadios2" value="famale">
+        <label class="form-check-label" for="gridRadios2">
+          女
+        </label>
+      </div>
+    </div>
+  </fieldset>
+  <div class="form-group row " >
+    <div class="col-sm-10" style="text-align: center">
+      <button type="submit" style="text-align: center" class="btn btn-primary">确认</button>
+    </div>
+  </div>
   </div>
 </form>
   </div>
@@ -121,18 +318,155 @@
     {% else %}
       <ul class="nav nav-tabs">
   <li class="nav-item">
-    <a class="nav-link active" data-toggle="tab" href="#home">动态</a>
+    <a class="nav-link active" id="state" data-toggle="tab" href="#home">动态</a>
   </li>
   <li class="nav-item ">
-    <a class="nav-link" data-toggle="tab" href="#menu2">修改密码</a>
+    <a class="nav-link" id="password" data-toggle="tab" href="#menu2">修改密码</a>
   </li>
   <li class="nav-item">
-    <a class="nav-link" data-toggle="tab" href="#menu3">设置</a>
+    <a class="nav-link" id="info" data-toggle="tab" href="#menu3">设置</a>
   </li>
 </ul>
     <div class="tab-content">
   <div class="tab-pane active container" id="home">
+  <div class="tab-content" id="v-pills-tabContent">
+      <div class="tab-pane fade show active" id="v-pills-home" role="tabpanel" aria-labelledby="v-pills-home-tab">
+                <div class="row clearfix">
+                <ul class="list-group">
 
+                    <!-- 帖子列表 -->
+                    {% for t in topics %}
+                        <li class="list-group-item" style="width: 700px" >
+                            <div class="row">
+                                <div class="col-sm-2">
+                                    {% if t.t_photo %}
+                            <a href="../../function/single/{{ t.id }}"><img style="width: 85px;height: 85px" src="{{ t.t_photo }}" alt="主页图"></a>
+                                    {%  else %}
+                            <a href="../../function/single/{{ t.id }}"><img style="width: 85px;height: 85px" src="static/img/default.jpeg" alt="主页图"></a>
+                                    {% endif %}
+                                    </div>
+                             <div class="col-sm-10">
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p > <a href="../../function/single/{{ t.id }}">标题：{{ t.t_title }}</a></p>
+                                      </div>
+                                  <div class="col-sm-6">
+                                      <p>简介：{{ t.t_introduce }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.t_content }}</p>
+                                     </div>
+                             </div>
+                            </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
+      </div>
+      <div class="tab-pane fade" id="v-pills-profile" role="tabpanel" aria-labelledby="v-pills-profile-tab"><div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in confession %}
+                        <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p> <a href="../../function/confessionsingle/{{ t.id }}/" style="color: tomato">{{ t.c_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.c_kind == "0" %}
+                                      <p>大胆表白</p>
+                                       {% else %}
+                                      <p>帮室友找朋友</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.c_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.c_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in c_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='c_image' style="width: 100px;height: 140px" src="{{ i.c_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div></div>
+      <div class="tab-pane fade" id="v-pills-messages" role="tabpanel" aria-labelledby="v-pills-messages-tab">  <div class="row clearfix">
+                <ul class="list-group">
+
+                    <!-- 帖子列表 -->
+                    {% for t in lost %}
+                        <li class="list-group-item" style="width: 700px" >
+
+                             <div >
+                             <div class="row">
+                                  <div class="col-sm-6">
+                                 <p> <a href="../../function/lostsingle/{{ t.id }}/" style="color: tomato">{{ t.l_title }}</a></p>
+                                      </div>
+                                   <div class="col-sm-6">
+                                       {% if t.l_kind == "0" %}
+                                      <p>人寻物</p>
+                                       {% else %}
+                                      <p>物寻人</p>
+                                       {% endif %}
+                                      </div>
+                                  <div class="col-sm-12">
+                                      <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">联系方式：{{ t.l_relation }}</p>
+                                      </div>
+                                 <div class="col-sm-12">
+                                        <p style="text-overflow:ellipsis;white-space: nowrap;overflow:hidden">文本：{{ t.l_text }}</p>
+                                     </div>
+                                                                 <div class="row col-sm-12">
+                                        {% for k,v in l_images.items %}
+                                            {% if k == t.id %}
+                                                <div id="show-box">
+                                                {% for i in v %}
+
+                                        <img class='l_image' style="width: 100px;height: 140px" src="{{ i.l_picture }}" alt="主页图">
+                                                {% endfor %}
+                                                                                            </div>
+
+                                            {% endif %}
+                                                {% endfor %}
+                                     </div>
+
+                             </div>
+                            </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div></div>
+      <div class="tab-pane fade" id="v-pills-settings" role="tabpanel" aria-labelledby="v-pills-settings-tab">        <div class="row">
+{% for s in senery %}
+                      <div class="col-sm-4 " style="margin-top:1%; text-align: center">
+<div class="card" style="width: 18rem;margin:auto">
+  <img class="card-img-top divcss5 pic01" src="{{ s.s_picture }}" alt="Card image cap">
+  <div class="card-body">
+    <p class="card-text">{{ s.s_text }}</p>
+  </div>
+</div>
+</div>
+{% endfor %}
+        </div></div>
+    </div>
   </div>
 
   <div class="tab-pane fade " id="menu2">
@@ -193,48 +527,60 @@
 </form>
   </div>
 </div>
-        </div>
     {% endif %}
 
     </div>
 
     <div class="col-sm-2"></div>
 </div>
+    <div class="pic02">
+    <img id="pic02" src="#" alt="">
+  </div>
 
 
 
-<footer class="panel-footer" style="width: 100%; top:90%; position: absolute; overflow: hidden;">
-      <div class="container">
-    <hr style="border: 1px  solid #000000;">
-    <div class="row" style="text-align: center;">
-     <div class="col-sm-3 col-md-3 col-lg-3">
-     <a href="#" style=" color: gray;">关于我们</a>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
-     <a href="#" style=" color: gray;">联系方式</a></li>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
-     <a href="#" style=" color: gray;">旗下网站</a></li>
-      </div>
-      <div class="col-sm-3 col-md-3 col-lg-3">
-     <a href="#" style=" color: gray;">特别致谢</a></li>
-      </div>
-    </div>
-      </div>
+<footer role="contentinfo" style="width: 100%; top:90%; overflow: hidden;">
+      <hr style="border: 1px  solid #000000;">
         <div class="container" style="text-align: center">
     @学习项目: <a href="https://jq.qq.com/?_wv=1027&k=IBGaNg6u">点击学习交流</a>
     @github:<a href="https://github.com/Akylin-S/zut_life">项目地址</a>
-            <p class="mt-5 mb-3 text-muted">&copy; 2020-2021</p>
+            <p class="mt-1 mb-3 text-muted">&copy; 2021-2021</p>
     </div>
     </footer>
 
 
 </body>
 <script>
+
+
 	$(document).ready(function() {
         $('#message').delay(6000).hide(0);
+        $(".c_image").each(function(e){
+		var file=this.src;
+		var type = file.split(".")[file.split(".").length-1];
+		if(type=="mp4"){
+            console.log($(this))
+            $(this).replaceWith('<video   style="width: 100px; height: 140px; vertical-align:middle; margin:auto;"\n src="'+ file +'"  controls >')
+        }
+
+	});
     });
    //在input file内容改变的时候触发事件
+
+    $('#info').click(function(){
+        console.log(66666666)
+         $('.state').hide()
+    })
+
+    $('#password').click(function(){
+        console.log(66666666)
+         $('.state').hide()
+    })
+
+    $('#state').click(function(){
+        console.log(66666666)
+         $('.state').show()
+    })
 
     $('#filed').change(function(){
       var file = $('#filed').get(0).files[0];
@@ -245,6 +591,15 @@
     //的base64编码格式的地址
         $('#imgshow').get(0).src = e.target.result;
       }
+    })
+        $('.pic01').on('click', function () {
+      var picSrc = $(this).attr('src')
+      $('.pic02 img').attr('src', picSrc)
+      $('.pic02').show()
+
+    })
+    $('.pic02').on('click', function () {
+      $('.pic02').hide()
     })
 </script>
 </html>

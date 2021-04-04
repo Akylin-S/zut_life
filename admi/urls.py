@@ -22,5 +22,7 @@ urlpatterns = [
     url(r'user/', views.user_admin.as_view()),
     url(r'forum/', views.forum_admin.as_view()),
     url(r'scenery/', views.admin_scenery.as_view()),
+    url(r'lost/', views.lost_admin.as_view()),
+    url(r'confession/', views.confession_admin.as_view()),
     url(r'logout/', views.logout),
 ]

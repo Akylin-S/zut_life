@@ -17,18 +17,8 @@
   .bg-light {
     background-color: #212529 !important;
 }
-  .visit_contain{
-	float:left;
-	margin-top:10px;
-	width:100%;
-}
-#history_visit{
-	background:#FFF;
-	margin-left: 10px;
-	width:1000px;
-	height:300px;
-	box-shadow: #666 0px 0px 2px;
-}
+
+
   </style>
 </head>
 <body>
@@ -42,7 +32,7 @@
       <div class="sidebar-sticky pt-3"  >
         <hr class="nav flex-column" style='background-color:white; height:1px; border:none;'>
           <li class="nav-item">
-            <a class="nav-link active" href="#">
+            <a class="nav-link active" href="../home">
               <span data-feather="home"></span>
               首页 <span class="sr-only">(current)</span>
             </a>
@@ -56,7 +46,7 @@
           </li>
                               <hr  style='background-color:white; height:1px; border:none;'/>
           <li class="nav-item">
-            <a class="nav-link" href='../forum'>
+            <a class="nav-link" href="../forum">
               <span data-feather="shopping-cart"></span>
               论坛管理
             </a>
@@ -70,7 +60,7 @@
           </li>
                               <hr  style='background-color:white; height:1px; border:none;'/>
           <li class="nav-item">
-            <a class="nav-link" href="../lost">
+            <a class="nav-link" href="#">
               <span data-feather="bar-chart-2"></span>
               失物招领管理
             </a>
@@ -83,7 +73,6 @@
               校园风景管理
             </a>
           </li>
-                </li>
                     <hr  style='background-color:white; height:1px; border:none;'/>
                     <li class="nav-item">
                         <a class="nav-link" href="../logout">
@@ -105,103 +94,60 @@
     </nav>
 
     <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
-                      <div class="row">
+                 <h1 class="display-8" style="text-align: center">失物招领管理</h1>
 
-            <div class="card ml-sm-6" style="margin-top:3px;margin-left:1.65% ;width: 30rem;">
-  <div class="card-body">
-<div class="container">
-  <div style="text-align: center"  class="row">
-    <div class="col-sm-4">
-      贴字数量
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      表白墙数量
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      失物招领数量
-    </div>
-          <div class="col-sm-4">
-      {{ forum_num }}
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      {}表白墙数量
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      {}失物招领数量
-    </div>
-  </div>
-</div>
-  </div>
+             <div class="row clearfix">
+                <ul class="list-group">
+                    <!-- 帖子列表 -->
+                    {% for t in lost %}
+                        <li class="list-group-item" style="text-align:center ; width: 250%" >
+                             <div class="row">
+                                  <div class="col-sm-4">
+                                 <p > 标题：{{t.l_title}}</p>
+                                      </div>
+                                  <div class="col-sm-4">
+                                      <p>联系方式：{{ t.l_relation }}</p>
+                                      </div>
+                                    <div class="col-sm-2">
+                                                                             {% if t.t_kind == '0'  %}
+                                        <p >种类：寻物</p>
+                                        {% elif t.t_kind == '1'%}
+                                        <p >种类：物寻人</p>
 
-</div>
-             <div class="card ml-sm-6" style="margin-top:3px;margin-left:3% ;width: 30rem;">
-  <div class="card-body">
-<div class="container">
-  <div class="row">
-    <div style="text-align: center"  class="col-sm-4">
-      用户人数
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      今日动态
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      今日访问量
-    </div>
-      <hr />
-          <div style="text-align: center" class="col-sm-4">
-              {{ user_num }}
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      {{ post_num }}
-    </div>
-    <div style="text-align: center"  class="col-sm-4">
-      {{ visit.visit_count }}
-    </div>
-  </div>
-</div>
-  </div>
-
-</div>
-    </div>
-
-        <div class="visit_contain">
-    	<div id="history_visit">
-    	</div>
-    </div>
+                                        {% endif %}
+                                     </div>
+                                   <div class="col-sm-2">
+                                       <p><a a href="javascript:post('',{id:'{{t.id}}'})" >删除</a></p>
+                                      </div>
+                             </div>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </div>
     </main>
   </div>
 </div>
 
 </body>
 <script type="text/javascript">
-        // 基于准备好的dom，初始化echarts实例
-        var myChart = echarts.init(document.getElementById('history_visit'));
-        // 指定图表的配置项和数据
-        var option = {
-			title: {
-                text: '近日访问量'
-            },
-			xAxis: {
-				type: 'category',
-				data: [
-                {% for days in five_day_visit %}
-                    '{{ days.day }}',
-                {% endfor %}]
-			},
-			yAxis: {
-				type: 'value'
-			},
-			series: [{
-				data: [
-                {% for days in five_day_visit %}
-                    {{ days.visit_count }},
-                {% endfor %}
-                ],
-				type: 'line'
-			}]
-		};
-
-        // 使用刚指定的配置项和数据显示图表。
-        myChart.setOption(option);
-    </script>
+    function post(url, params) {
+    var temp = document.createElement("form"); //创建form表单
+    temp.action = url;
+    temp.method = "post";
+    temp.style.display = "none";//表单样式为隐藏
+    for (var item in params) {//初始化表单内部的控件
+       //根据实际情况创建不同的标签元素
+        var opt =document.createElement("input");  //添加input标签
+        opt.type="text";   //类型为text
+        opt.id = item;      //设置id属性
+        opt.name = item;    //设置name属性
+        opt.value = params[item];   //设置value属性
+        temp.appendChild(opt);
+    }
+    console.log(temp)
+    document.body.appendChild(temp);
+    temp.submit();
+    return temp;
+}
+</script>
 </html>

@@ -53,14 +53,14 @@
           </li>
                                 <hr  style='background-color:white; height:1px; border:none;'/>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href=../confession>
               <span data-feather="users"></span>
               表白墙管理
             </a>
           </li>
                               <hr  style='background-color:white; height:1px; border:none;'/>
           <li class="nav-item">
-            <a class="nav-link" href="#">
+            <a class="nav-link" href="../lost">
               <span data-feather="bar-chart-2"></span>
               失物招领管理
             </a>
@@ -109,7 +109,17 @@
                                       <p>简介：{{ t.t_introduce }}</p>
                                       </div>
                                     <div class="col-sm-2">
-                                        <p >种类：{{ t.t_kind }}</p>
+                                        {% if t.t_kind == '1'  %}
+                                        <p >种类：社团</p>
+                                        {% elif t.t_kind == '2'%}
+                                        <p >种类：学习</p>
+                                         {% elif t.t_kind == '3'%}
+                                        <p >种类：游戏</p>
+                                         {% elif t.t_kind == '4'%}
+                                        <p >种类：运动</p>
+                                        {% else %}
+                                        <p >种类：其它</p>
+                                        {% endif %}
                                      </div>
                                    <div class="col-sm-2">
                                        <p><a a href="javascript:post('',{id:'{{t.id}}'})" >删除</a></p>

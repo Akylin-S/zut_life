@@ -9,6 +9,7 @@ from django.template import loader
 from django.views import View
 from django_redis import get_redis_connection
 
+from function.models import Topic, confession, lost, scenery
 from .captcha.captcha import captcha
 from account.models import UserInfo
 from . import constants
@@ -119,11 +120,28 @@ def persron_center(request):
         return redirect('/account/login/')
     user = request.COOKIES.get("user_name")
     dbuser = UserInfo.objects.get(user=user)
-
+    topics = Topic.objects.filter(t_uid=dbuser.user_id)
     # confession_list = PostInfo.objects.filter(category="confession",reviewed="past")
     template = loader.get_template('account/personal_center.html')
+    con = confession.objects.filter(c_uid = dbuser.user_id)
+    c_i = {}
+
+    for i in con:
+        c_i[i.id] = i.c_images_set.all()
+    lost1 = lost.objects.filter(l_uid = dbuser.user_id)
+    l_i = {}
+    all_senery = scenery.objects.filter(s_uid=dbuser.user_id)
+    print(all_senery)
+    for i in lost1:
+        l_i[i.id] = i.l_images_set.all()
     context = {
+        'topics': topics,
         "user": dbuser,
+        'c_images': c_i,
+        'confession': con,
+        'l_images': l_i,
+        'lost': lost1,
+        'senery':all_senery
     }
     return HttpResponse(template.render(context))
 
@@ -150,27 +168,31 @@ class change(View):
             dbuser.save()
             return redirect('/account/logout/')
         else:
-            print(8)
-            return render(request, 'account/personal_center.html', {"user": dbuser, "message_password": '两次输入的密码不同'})
+            topics = Topic.objects.filter(t_uid=dbuser.user_id)
+            # confession_list = PostInfo.objects.filter(category="confession",reviewed="past")
+            template = loader.get_template('account/personal_center.html')
+            con = confession.objects.filter(c_uid=dbuser.user_id)
+            c_i = {}
 
-
-class setting(View):
-
-    def get(self, request):
-        return redirect('/account/personal_center/')
-
-    def post(self, request):
-        if not request.COOKIES.get('is_login'):
-            return redirect('/account/login/')
-        email = request.POST.get('email')
-        phone = request.POST.get('phone')
-        user_img = request.FILES.get('img')
-        user = request.COOKIES.get("user_name")
-        dbuser = UserInfo.objects.get(user=user)
-        dbuser.email = email
-        dbuser.phone = phone
-        dbuser.user_img = user_img
-        dbuser.save()
+            for i in con:
+                c_i[i.id] = i.c_images_set.all()
+            lost1 = lost.objects.filter(l_uid=dbuser.user_id)
+            l_i = {}
+            all_senery = scenery.objects.filter(s_uid=dbuser.user_id)
+            print(all_senery)
+            for i in lost1:
+                l_i[i.id] = i.l_images_set.all()
+            context = {
+                "message_password": '两次输入的密码不同',
+                'topics': topics,
+                "user": dbuser,
+                'c_images': c_i,
+                'confession': con,
+                'l_images': l_i,
+                'lost': lost1,
+                'senery': all_senery
+            }
+            return render(request, 'account/personal_center.html', context)
 
 class ChangeUserData(View):
     def get(self, request):

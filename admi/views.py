@@ -54,13 +54,17 @@ class home(View):
 
         publish_num = Topic.objects.filter(create_time=date.today()).count()
         forum_num = Topic.objects.all().count()
+        con_num = confession.objects.all().count()
+        lost_num = lost.objects.all().count()
         context = {
             'post_num': publish_num,
             'back_user': user,
             'visit': visit_now,
             'user_num': user_num,
             'five_day_visit': fiveday_visit_num,
-            'forum_num': forum_num
+            'forum_num': forum_num,
+            'con_num': con_num,
+            'lost_num': lost_num,
         }
         return render(request, 'admi/home.html', context)
 

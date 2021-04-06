@@ -6,7 +6,7 @@ class Topic(models.Model):
     t_uid = models.CharField(verbose_name='帖子所属用户id', max_length=16)
     t_kind = models.CharField(verbose_name='类别', max_length=32)
     create_time = models.DateField(verbose_name='创建时间', auto_now_add=True)
-    t_photo = models.CharField(verbose_name='帖子图片', max_length=128, null=True)
+    t_photo = models.CharField(verbose_name='帖子图片', default='/static/img/forum.jpg',max_length=128, null=True)
     t_content = models.CharField(verbose_name='帖子正文', max_length=3000)
     t_title = models.CharField(verbose_name='帖子标题', max_length=64)
     t_introduce = models.CharField(verbose_name='帖子简介', max_length=256)

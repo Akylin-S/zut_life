@@ -201,20 +201,21 @@ def to_publish_forum(request):
         obj = Topic.objects.create(t_title=t_title, t_introduce=t_introduce,
                                    t_content=t_content, t_kind=t_kind, t_uid=uid)
         t_id = obj.id
-
         # 存帖子图片
-        t_photo = request.FILES.get('t_photo', None)
-        t_photo_path = 'static/img/t_photo/' + str(t_id) + '_' + t_photo.name
+        t_photo = request.FILES.get('t_photo')
+        print(t_photo != None)
 
-        if t_photo:
+
+        if t_photo != None:
+            print(6666666)
             # 保存文件
+            t_photo_path = 'static/img/t_photo/' + str(t_id) + '_' + t_photo.name
             f = open(os.path.join(t_photo_path), 'wb')
             for line in t_photo.chunks():
                 f.write(line)
             f.close()
-
-        # 吧图片路径存入数据库
-        Topic.objects.filter(id=t_id).update(t_photo='/' + t_photo_path)
+            # 吧图片路径存入数据库
+            Topic.objects.filter(id=t_id).update(t_photo='/' + t_photo_path)
 
         return redirect('/function/forum-0-0-0/1')
 
@@ -408,6 +409,7 @@ class v_lost(View):
             l_images.objects.create(l_picture='/' + l_picture_path, lost=v_lost)
         return redirect('/function/lost/')
 
+
 def search_lost(request):
     if not request.COOKIES.get("is_login"):
         return redirect('/account/login')
@@ -427,6 +429,7 @@ def search_lost(request):
         'keys': keys
     }
     return render(request, 'function/lost.html', response)
+
 
 class single_lost(View):
     def get(self, request, cid):
@@ -451,7 +454,7 @@ class single_lost(View):
             }
             reply_list.append(single_reply)
 
-        response = {'lost': lost1, 'img': img,  'user': dbuser, 'reply_list': reply_list}
+        response = {'lost': lost1, 'img': img, 'user': dbuser, 'reply_list': reply_list}
 
         return render(request, 'function/detail_lost.html', response)
 
@@ -480,6 +483,7 @@ class single_lost(View):
         # 吧图片路径存入数据库
         l_reply.objects.filter(id=r_id).update(r_photo='/' + r_photo_path)
         return redirect('/function/lostsingle/' + cid)
+
 
 class single_confession(View):
     def get(self, request, cid):

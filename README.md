@@ -57,9 +57,9 @@ ubuntu+nginx+uwsgi+django
  python manage.py makemigrations
  python manage.py migrate
 ```
-
+## 项目部署
+ 具体问题具体分析，想学习的话可以联系qq：1114564087 备注：学习项目
  ### 学习交流
-
 点击进行 [学习交流](https://qm.qq.com/cgi-bin/qm/qr?k=fKyrqk9xxO9FRFyUEK5ayKHZcpXOga6W&authKey=hcMp8sTJyTk5KFu5T6WR1HNvO4ZWMNT4%2B7in8OqRufN3%2FuMMeLjaRLytvBmLksUY&noverify=0&group_code=821033535 "最好的markdown教程")
 
 ### 如果项目对你有帮助，可以给个星星吗！！！！！！！

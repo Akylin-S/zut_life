@@ -161,11 +161,5 @@ SESSION_ENGINE = "django.contrib.sessions.backends.cache"
 SESSION_CACHE_ALIAS = "session"
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 * 2
 
-CORS_ORIGIN_WHITELIST = (
-    'http://127.0.0.1:8000',
-    'http://localhost:8000',
-    'http://127.0.0.1:63342',
-    'http://localhost:63342'
-)
 CORS_ALLOW_CREDENTIALS = True  # 允许携带cookie
 

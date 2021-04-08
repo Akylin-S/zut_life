@@ -1,6 +1,8 @@
 from django.contrib import sitemaps
 from django.urls import reverse
-#网站地图sitemap
+
+
+# 网站地图sitemap
 
 class StaticViewSitemap(sitemaps.Sitemap):
     priority = 0.5

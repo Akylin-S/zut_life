@@ -16,7 +16,7 @@ class Confession(View):
             return redirect('/account/login')
         # 访问量
         # day_visit(request)
-
+        
         user = request.COOKIES.get("user_name")
         dbuser = UserInfo.objects.get(user=user)
 

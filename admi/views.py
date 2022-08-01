@@ -189,7 +189,6 @@ class admin_scenery(View):
         id = request.POST.get('id')
         s_pass = request.POST.get('pass')
         if s_pass == '1' :
-            print(s_pass)
 
             sc =scenery.objects.get(id=id)
             sc.s_pass =str(s_pass)

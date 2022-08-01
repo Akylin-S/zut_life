@@ -27,7 +27,8 @@ class ImageCodeView(View):
         # 生成验证码图片
         text, image = captcha.generate_captcha()
         redis_conn = get_redis_connection("verify_codes")
-        redis_conn.setex("img_%s" % image_code_id, constants.IMAGE_CODE_REDIS_EXPIRES, text)
+        redis_conn.setex(f"img_{image_code_id}", constants.IMAGE_CODE_REDIS_EXPIRES, text)
+
         # 固定返回验证码图片数据，不需要REST framework框架的Response帮助我们决定返回响应数据的格式
         # 所以此处直接使用Django原生的HttpResponse即可
         return HttpResponse(image, content_type="images/jpg")
@@ -46,22 +47,21 @@ class verifications(View):
         message = '账号不存在'
         try:
             dbuser = UserInfo.objects.get(user=user)
-        except:
+        except Exception:
             print('error')
             return render(request, 'account/login.html', {"message": message})
-        if dbuser.password == password:
-            rep = redirect('/index/success/')
-            rep.set_cookie("is_login", True)
-            username = dbuser.user
-            userid = dbuser.user_id
-            userimg = dbuser.user_img
-            rep.set_cookie("user_name", username)
-            rep.set_cookie("user_id", userid)
-            rep.set_cookie("user_img", userimg)
-            request.session["user"] = username
-            return rep
-        else:
+        if dbuser.password != password:
             return render(request, 'account/login.html', {"message": '账号或密码错误'})
+        rep = redirect('/index/success/')
+        rep.set_cookie("is_login", True)
+        username = dbuser.user
+        userid = dbuser.user_id
+        userimg = dbuser.user_img
+        rep.set_cookie("user_name", username)
+        rep.set_cookie("user_id", userid)
+        rep.set_cookie("user_img", userimg)
+        request.session["user"] = username
+        return rep
 
 
 def login(request):
@@ -84,14 +84,13 @@ class Verification_Register(View):
         uuid = request.POST.get('img_code')
         print(uuid)
         redis_conn = get_redis_connection("verify_codes")
-        text2 = redis_conn.get("img_%s" % uuid).decode()
+        text2 = redis_conn.get(f"img_{uuid}").decode()
         if text2.lower() != text1.lower():
             message = '验证码错误'
             return render(request, 'account/register.html', {'message': message})
 
         if password == confirm_password:
-            user_name = UserInfo.objects.filter(user=user)
-            if user_name:
+            if user_name := UserInfo.objects.filter(user=user):
                 message = '用户名已存在'
                 return render(request, 'account/register.html', {'message': message})
             user = UserInfo(user=user, password=password)
@@ -124,16 +123,12 @@ def persron_center(request):
     # confession_list = PostInfo.objects.filter(category="confession",reviewed="past")
     template = loader.get_template('account/personal_center.html')
     con = confession.objects.filter(c_uid = dbuser.user_id)
-    c_i = {}
+    c_i = {i.id: i.c_images_set.all() for i in con}
 
-    for i in con:
-        c_i[i.id] = i.c_images_set.all()
     lost1 = lost.objects.filter(l_uid = dbuser.user_id)
-    l_i = {}
     all_senery = scenery.objects.filter(s_uid=dbuser.user_id)
     print(all_senery)
-    for i in lost1:
-        l_i[i.id] = i.l_images_set.all()
+    l_i = {i.id: i.l_images_set.all() for i in lost1}
     context = {
         'topics': topics,
         "user": dbuser,
@@ -149,11 +144,9 @@ def persron_center(request):
 class change(View):
 
     def get(self, request):
-        print(1)
         return redirect('/account/personal_center/')
 
     def post(self, request):
-        print(5)
         if not request.COOKIES.get('is_login'):
             return redirect('/account/login/')
         password = request.POST.get('password')
@@ -163,7 +156,6 @@ class change(View):
         user = request.COOKIES.get("user_name")
         dbuser = UserInfo.objects.get(user=user)
         if password == password1:
-            print(7)
             dbuser.password = password
             dbuser.save()
             return redirect('/account/logout/')
@@ -172,16 +164,12 @@ class change(View):
             # confession_list = PostInfo.objects.filter(category="confession",reviewed="past")
             template = loader.get_template('account/personal_center.html')
             con = confession.objects.filter(c_uid=dbuser.user_id)
-            c_i = {}
+            c_i = {i.id: i.c_images_set.all() for i in con}
 
-            for i in con:
-                c_i[i.id] = i.c_images_set.all()
             lost1 = lost.objects.filter(l_uid=dbuser.user_id)
-            l_i = {}
             all_senery = scenery.objects.filter(s_uid=dbuser.user_id)
             print(all_senery)
-            for i in lost1:
-                l_i[i.id] = i.l_images_set.all()
+            l_i = {i.id: i.l_images_set.all() for i in lost1}
             context = {
                 "message_password": '两次输入的密码不同',
                 'topics': topics,
@@ -211,15 +199,14 @@ class ChangeUserData(View):
         if email:
             dbuser.email=email
         if img:
-            mk ='static/img/user_img/'+str(user)
+            mk = f'static/img/user_img/{str(user)}'
             if not os.path.exists(mk):
                 os.mkdir(mk)
-            user_img = 'static/img/user_img/'+str(user)+'/'+str(img)
+            user_img = f'static/img/user_img/{str(user)}/{str(img)}'
             print(user_img)
-            f = open(os.path.join(user_img),'wb')
-            for line in img.chunks():
-                f.write(line)
-            f.close()
+            with open(os.path.join(user_img),'wb') as f:
+                for line in img.chunks():
+                    f.write(line)
             dbuser.user_img=user_img
         if phone:
             dbuser.phone=phone
